@@ -14,7 +14,7 @@ using System.Xml.Linq;
 namespace Fridge_Shopping_app
 {
     [QueryProperty(nameof(EditedItem), "savedItem")]
-    internal partial class FridgePageViewModel : ObservableObject
+    internal partial class MainPageViewModel : ObservableObject
     {
         public ObservableCollection<FridgeItem> ItemsInFridge { get; set; }
         public FridgeItem? SelectedItem { get; set; }
@@ -36,7 +36,7 @@ namespace Fridge_Shopping_app
 
         string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "items_in_fridge.json");
 
-        public FridgePageViewModel()
+        public MainPageViewModel()
         {
             ItemsInFridge = new ObservableCollection<FridgeItem>();
         }
