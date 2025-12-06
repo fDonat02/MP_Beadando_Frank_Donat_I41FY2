@@ -17,5 +17,10 @@ namespace Fridge_Shopping_app
 
         [ObservableProperty]
         DateOnly exp_date;
+
+        public FridgeItem GetCopy()
+        {
+            return (FridgeItem)this.MemberwiseClone();
+        }
     }
 }
