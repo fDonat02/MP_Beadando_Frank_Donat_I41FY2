@@ -94,7 +94,7 @@ namespace Fridge_Shopping_app
             }
             else
             {
-                WeakReferenceMessenger.Default.Send("Select an item to edit!");
+                WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to edit!"));
             }
         }
 
@@ -108,7 +108,7 @@ namespace Fridge_Shopping_app
             }
             else
             {
-                WeakReferenceMessenger.Default.Send("Select an item to delete!");
+                WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to delete!"));
             }
         }
     }
