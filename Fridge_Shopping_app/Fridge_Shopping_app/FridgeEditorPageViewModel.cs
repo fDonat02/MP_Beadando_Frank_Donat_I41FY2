@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Fridge_Shopping_app
 {
     [QueryProperty(nameof(Item), "editItem")]
-    internal partial class EditorPageViewModel : ObservableObject
+    internal partial class FridgeEditorPageViewModel : ObservableObject
     {
         [ObservableProperty]
         FridgeItem item;
@@ -21,7 +21,7 @@ namespace Fridge_Shopping_app
             {
                 {"savedItem", Item}
             };
-            await Shell.Current.GoToAsync("..", param);
+            await Shell.Current.GoToAsync("///MainPage", param);
         }
     }
 }

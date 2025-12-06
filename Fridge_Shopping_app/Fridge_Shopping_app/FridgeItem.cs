@@ -13,10 +13,10 @@ namespace Fridge_Shopping_app
         string name;
 
         [ObservableProperty]
-        float quantity;
+        float quantity = 1;
 
         [ObservableProperty]
-        DateTime exp_date;
+        DateTime exp_date = DateTime.Today;
 
         public FridgeItem GetCopy()
         {

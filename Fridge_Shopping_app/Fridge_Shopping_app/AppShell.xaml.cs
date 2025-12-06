@@ -5,7 +5,7 @@
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(EditorPage), typeof(EditorPage));
+            Routing.RegisterRoute(nameof(FridgeEditorPage), typeof(FridgeEditorPage));
         }
     }
 }

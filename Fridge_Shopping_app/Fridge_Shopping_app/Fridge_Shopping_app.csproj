@@ -67,7 +67,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="EditorPage.xaml">
+	  <Compile Update="FridgeEditorPage.xaml.cs">
+	    <DependentUpon>FridgeEditorPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="FridgeEditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

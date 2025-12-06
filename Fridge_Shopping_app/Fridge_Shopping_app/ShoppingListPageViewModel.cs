@@ -14,9 +14,9 @@ using System.Xml.Linq;
 namespace Fridge_Shopping_app
 {
     [QueryProperty(nameof(EditedItem), "savedItem")]
-    internal partial class MainPageViewModel : ObservableObject
+    internal partial class ShoppingListPageViewModel : ObservableObject
     {
-        public ObservableCollection<FridgeItem> ItemsInFridge { get; set; }
+        public ObservableCollection<FridgeItem> ItemsOnShoppingList { get; set; }
         public FridgeItem? SelectedItem { get; set; }
 
         public FridgeItem EditedItem
@@ -27,23 +27,23 @@ namespace Fridge_Shopping_app
                 {
                     if (SelectedItem != null)
                     {
-                        ItemsInFridge.Remove(SelectedItem);
+                        ItemsOnShoppingList.Remove(SelectedItem);
                     }
-                    ItemsInFridge.Add(value);
+                    ItemsOnShoppingList.Add(value);
                 }
             }
         }
 
-        string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "items_in_fridge.json");
+        string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "items_on_shopping_list.json");
 
-        public MainPageViewModel()
+        public ShoppingListPageViewModel()
         {
-            ItemsInFridge = new ObservableCollection<FridgeItem>();
+            ItemsOnShoppingList = new ObservableCollection<FridgeItem>();
         }
 
         public async Task InitCollectionsAsync()
         {
-            if (File.Exists(filePath) && ItemsInFridge.Count() == 0)
+            if (File.Exists(filePath) && ItemsOnShoppingList.Count() == 0)
             {
                 string jsonString = await File.ReadAllTextAsync(filePath);
                 if (!string.IsNullOrEmpty(jsonString))
@@ -51,7 +51,7 @@ namespace Fridge_Shopping_app
                     var items = JsonSerializer.Deserialize<List<FridgeItem>>(jsonString);
                     foreach (var item in items)
                     {
-                        ItemsInFridge.Add(item);
+                        ItemsOnShoppingList.Add(item);
                     }
                 }
             }
@@ -61,7 +61,7 @@ namespace Fridge_Shopping_app
         {
             try
             {
-                string jsonString = JsonSerializer.Serialize(ItemsInFridge);
+                string jsonString = JsonSerializer.Serialize(ItemsOnShoppingList);
                 await File.WriteAllTextAsync(filePath, jsonString);
             }
             catch (Exception e)
@@ -103,12 +103,29 @@ namespace Fridge_Shopping_app
         {
             if (SelectedItem != null)
             {
-                await Task.Run(() => ItemsInFridge.Remove(SelectedItem));
+                await Task.Run(() => ItemsOnShoppingList.Remove(SelectedItem));
                 SelectedItem = null;
             }
             else
             {
                 WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to delete!"));
+            }
+        }
+
+        [RelayCommand]
+        async Task AddItemToFridgeAsync()
+        {
+            if (SelectedItem != null)
+            {
+                var param = new ShellNavigationQueryParameters()
+            {
+                {"editItem", new FridgeItem() }
+            };
+                await Shell.Current.GoToAsync(nameof(FridgeEditorPage), param);
+            }
+            else
+            {
+                WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to add to fridge!"));
             }
         }
     }
