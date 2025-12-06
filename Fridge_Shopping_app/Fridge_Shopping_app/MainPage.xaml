@@ -16,14 +16,13 @@
         <!-- Sablonokat definiálhatunk erőforrásként, így mindkét listánál használhatjuk. -->
         <!-- Egyszer kell megírni, mindkét lista elemei ugyanúgy fognak kinézni. -->
         <DataTemplate x:Key="fridgeCollectionItem" x:DataType="loc:FridgeItem">
-            <HorizontalStackLayout Padding="4">
-                <Border Stroke="LightGray" StrokeThickness="1">
+            <Border Stroke="LightGray" StrokeThickness="1">
+                <HorizontalStackLayout Padding="4">
                     <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
-                    <!-- StringFormat: statikus szöveg beszúrása az adatkötésből jövő érték köré. -->
                     <Label Text="{Binding Quantity, StringFormat='{0}'}" />
                     <Label Text="{Binding Exp_date}"/>
-                </Border>
             </HorizontalStackLayout>
+            </Border>
         </DataTemplate>
 
         <!-- Stílusokat is definiálhatunk erőforrásként. -->
