@@ -16,7 +16,7 @@ namespace Fridge_Shopping_app
         float quantity;
 
         [ObservableProperty]
-        DateOnly exp_date;
+        DateTime exp_date;
 
         public FridgeItem GetCopy()
         {

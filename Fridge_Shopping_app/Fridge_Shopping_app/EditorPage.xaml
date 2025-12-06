@@ -12,17 +12,21 @@
 
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="mainLabel">
-            <Setter Property="BackgroundColor" Value="AliceBlue" />
-            <Setter Property="FontSize" Value="Large" />
+            <Setter Property="BackgroundColor" Value="DarkSlateGrey" />
             <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <Style TargetType="Label" x:Key="textInput">
+            <Setter Property="BackgroundColor" Value="DarkGrey" />
+            <Setter Property="FontSize" Value="Large" />
         </Style>
     </ContentPage.Resources>
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Spacing="10">
         <Label Text="Name" Style="{StaticResource mainLabel}" />
-        <Entry Text="{Binding Item.Name}" />
+        <Entry Text="{Binding Item.Name}" Style="{StaticResource textInput}" />
         <Label Text="Quantity" Style="{StaticResource mainLabel}" />
-        <Entry Text="{Binding Item.Quantity}" />
+        <Entry Text="{Binding Item.Quantity}" Style="{StaticResource textInput}" />
         <Label Text="Expiration date" Style="{StaticResource mainLabel}" />
         <DatePicker Date="{Binding Item.Exp_date}" />
         <Button Text="Save" Command="{Binding SaveCommand}" />

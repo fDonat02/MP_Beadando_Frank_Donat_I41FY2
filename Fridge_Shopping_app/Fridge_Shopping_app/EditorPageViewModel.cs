@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fridge_Shopping_app
 {
-    [QueryProperty(nameof(item), "editItem")]
+    [QueryProperty(nameof(Item), "editItem")]
     internal partial class EditorPageViewModel : ObservableObject
     {
         [ObservableProperty]
@@ -19,7 +19,7 @@ namespace Fridge_Shopping_app
         {
             var param = new ShellNavigationQueryParameters()
             {
-                {"savedItem", item }
+                {"savedItem", Item}
             };
             await Shell.Current.GoToAsync("..", param);
         }

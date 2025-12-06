@@ -17,11 +17,11 @@
         <!-- Egyszer kell megírni, mindkét lista elemei ugyanúgy fognak kinézni. -->
         <DataTemplate x:Key="fridgeCollectionItem" x:DataType="loc:FridgeItem">
             <Border Stroke="LightGray" StrokeThickness="1">
-                <HorizontalStackLayout Padding="4">
-                    <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold" />
-                    <Label Text="{Binding Quantity, StringFormat='{0}'}" />
-                    <Label Text="{Binding Exp_date}"/>
-            </HorizontalStackLayout>
+                <Grid ColumnDefinitions="*, Auto, *" Padding="4">
+                    <Label Text="{Binding Name}" Grid.Column="0" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Quantity}" Grid.Column="1" HorizontalOptions="Center"/>
+                    <Label Text="{Binding Exp_date, StringFormat='{}{0:MMM dd, yyyy}'}" Grid.Column="2" HorizontalOptions="End"/>
+                </Grid>
             </Border>
         </DataTemplate>
 
@@ -46,7 +46,6 @@
                 <Button Grid.Column="1" Text="Edit" Command="{Binding EditItemCommand}" />
                 <Button Grid.Column="2" Text="Delete" Command="{Binding DeleteItemCommand}" />
             </Grid>
-            <!-- StringFormat: statikus szöveg beszúrása az adatkötésből jövő érték köré. -->
 
             <Border Style="{StaticResource collectionBorder}">
                 <CollectionView
