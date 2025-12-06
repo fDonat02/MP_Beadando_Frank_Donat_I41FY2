@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:Fridge_Shopping_app"
+             x:Class="Fridge_Shopping_app.ShoppingListPage"
+             x:DataType="loc:ShoppingListPageViewModel"
+             Loaded="ContentPage_Loaded">
+
+    <!-- BindingContext beállítása XAML-ből. Az osztályokra mindig névtér alias-szal kell hivatkozni. -->
+    <!-- A névtereket legtöbb esetben importálni kell a CotentPage attribútumai között 'xmlns:alias' formában. -->
+    <ContentPage.BindingContext>
+        <loc:ShoppingListPageViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <!-- Sablonokat definiálhatunk erőforrásként, így mindkét listánál használhatjuk. -->
+        <!-- Egyszer kell megírni, mindkét lista elemei ugyanúgy fognak kinézni. -->
+        <DataTemplate x:Key="shoppingListCollectionItem" x:DataType="loc:FridgeItem">
+            <Border Stroke="LightGray" StrokeThickness="1">
+                <Grid ColumnDefinitions="*, Auto, *" Padding="4">
+                    <Label Text="{Binding Name}" Grid.Column="0" HorizontalOptions="Start"/>
+                    <Label Text="{Binding Quantity}" Grid.Column="1" HorizontalOptions="Center"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- Stílusokat is definiálhatunk erőforrásként. -->
+        <!-- Ha nem adunk meg kulcsot (x:Key), akkor az összes 'TargetType' típusú UI elemre vonatkozik. -->
+        <!-- Ha van kulcs, akkor csak azok a UI elemek veszik fel a stílust, melyeknél hivatkozunk rá. -->
+        <Style TargetType="Border" x:Key="collectionBorder">
+            <Setter Property="Stroke" Value="DarkSlateGray" />
+            <Setter Property="StrokeThickness" Value="3" />
+            <Setter Property="MinimumHeightRequest" Value="200" />
+        </Style>
+
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout
+        Padding="30,0"
+        Spacing="10">
+
+            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="1*,1*,1*" RowSpacing="20" ColumnSpacing="10">
+                <Button Grid.Row="0" Grid.Column="0" Text="New" Command="{Binding NewItemCommand}" />
+                <Button Grid.Row="0" Grid.Column="1" Text="Edit" Command="{Binding EditItemCommand}" />
+                <Button Grid.Row="0" Grid.Column="2" Text="Delete" Command="{Binding DeleteItemCommand}" />
+                <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Add to fridge" BackgroundColor="DarkCyan" Command="{Binding AddItemToFridgeCommand}" />
+            </Grid>
+
+            <Border Style="{StaticResource collectionBorder}">
+                <CollectionView
+                ItemsSource="{Binding ItemsOnShoppingList}"
+                SelectedItem="{Binding SelectedItem}"
+                SelectionMode="Single"
+                ItemTemplate="{StaticResource shoppingListCollectionItem}" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

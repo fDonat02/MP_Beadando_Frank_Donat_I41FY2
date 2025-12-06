@@ -6,9 +6,25 @@
     xmlns:local="clr-namespace:Fridge_Shopping_app"
     Title="Fridge_Shopping_app">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <FlyoutItem Title="Fridge">
+        <ShellContent
+            Title="Fridge"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
+    <!--
+    <FlyoutItem Title="Quotas">
+        <ShellContent
+        Title="Fridge"
+        ContentTemplate="{DataTemplate local:QuotasPage}"
+        Route="QuotasPage" />
+    </FlyoutItem>
+    -->
+    <FlyoutItem Title="Shopping List">
+        <ShellContent
+        Title="Shopping List"
+        ContentTemplate="{DataTemplate local:ShoppingListPage}"
+        Route="ShoppingList" />
+    </FlyoutItem>
+    
 </Shell>

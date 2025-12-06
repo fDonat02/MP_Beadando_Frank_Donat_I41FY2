@@ -1,15 +1,15 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Fridge_Shopping_app
 {
-    public partial class MainPage : ContentPage
+    public partial class ShoppingListPage : ContentPage
     {
-        public MainPage()
+        public ShoppingListPage()
         {
             InitializeComponent();
-
+            /*
             // Register recipient to alert messages
-            WeakReferenceMessenger.Default.Register<MainPage, AlertMessage>
+            WeakReferenceMessenger.Default.Register<ShoppingListPage, AlertMessage>
                 (
                 this, (r, msg) =>
                 {
@@ -17,12 +17,12 @@ namespace Fridge_Shopping_app
                     {
                         DisplayAlert("Notice", msg.Value, "OK");
                     });
-                });
+                });*/
         }
 
         private async void ContentPage_Loaded(object sender, EventArgs e)
         {
-            if (this.BindingContext is MainPageViewModel vm)
+            if (this.BindingContext is ShoppingListPageViewModel vm)
             {
                 await vm.InitCollectionsAsync();
             }
@@ -31,11 +31,10 @@ namespace Fridge_Shopping_app
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            if (this.BindingContext is MainPageViewModel vm)
+            if (this.BindingContext is ShoppingListPageViewModel vm)
             {
                 vm.SaveCollectionsAsync();
             }
         }
     }
-
 }

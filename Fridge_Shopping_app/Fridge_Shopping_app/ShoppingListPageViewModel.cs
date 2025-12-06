@@ -78,7 +78,7 @@ namespace Fridge_Shopping_app
             {
                 {"editItem", new FridgeItem() }
             };
-            await Shell.Current.GoToAsync(nameof(FridgeEditorPage), param);
+            await Shell.Current.GoToAsync(nameof(ShoppingListEditorPage), param);
         }
 
         [RelayCommand]
@@ -90,7 +90,7 @@ namespace Fridge_Shopping_app
                 {
                     {"editItem", SelectedItem.GetCopy() }
                 };
-                await Shell.Current.GoToAsync(nameof(FridgeEditorPage), param);
+                await Shell.Current.GoToAsync(nameof(ShoppingListEditorPage), param);
             }
             else
             {
@@ -119,7 +119,7 @@ namespace Fridge_Shopping_app
             {
                 var param = new ShellNavigationQueryParameters()
             {
-                {"editItem", new FridgeItem() }
+                {"editItem", SelectedItem.GetCopy() }
             };
                 await Shell.Current.GoToAsync(nameof(FridgeEditorPage), param);
             }
