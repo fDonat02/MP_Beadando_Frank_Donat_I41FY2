@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:loc="clr-namespace:Fridge_Shopping_app"
+             x:Class="Fridge_Shopping_app.QuotasEditorPage"
+             Title="Set quota"
+             x:DataType="loc:QuotasEditorPageViewModel">
+
+    <ContentPage.BindingContext>
+        <loc:QuotasEditorPageViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="mainLabel">
+            <Setter Property="BackgroundColor" Value="DarkSlateGrey" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Padding" Value="10"/>
+        </Style>
+        <Style TargetType="Label" x:Key="textInput">
+            <Setter Property="BackgroundColor" Value="DarkGrey" />
+            <Setter Property="FontSize" Value="Large" />
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Spacing="10">
+        <Label Text="Name" Style="{StaticResource mainLabel}" />
+        <Entry Text="{Binding Item.Name}" Style="{StaticResource textInput}" Placeholder="Name of item" />
+        <Label Text="Quota (minimum)" Style="{StaticResource mainLabel}" />
+        <Entry Text="{Binding Item.Quantity}" Style="{StaticResource textInput}" />
+        <Button Text="Save" Command="{Binding SaveCommand}" />
+    </VerticalStackLayout>
+
+</ContentPage>
