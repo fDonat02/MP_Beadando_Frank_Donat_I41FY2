@@ -33,6 +33,7 @@ namespace Fridge_Shopping_app
                     }
 
                     ItemsOnQuota.Add(value);
+                    //Any time a quota gets added or changes, they're recalculated to add them to the shopping list
                     SyncShoppingListWithQuotas();
                 }
             }
@@ -49,7 +50,7 @@ namespace Fridge_Shopping_app
             ItemsOnQuota = new ObservableCollection<FridgeItem>();
         }
 
-
+        // Method for syncing the shopping list with quotas, by calculating the difference between the sum of (fridge+shopping list) and the quota value.
         public void SyncShoppingListWithQuotas()
         {
             var toAdd = new List<FridgeItem>();
@@ -119,8 +120,7 @@ namespace Fridge_Shopping_app
                 {"editItem", new FridgeItem() }
             };
             await Shell.Current.GoToAsync(nameof(QuotasEditorPage), param);
-
-            
+           
         }
 
         [RelayCommand]
@@ -133,7 +133,6 @@ namespace Fridge_Shopping_app
                     {"editItem", SelectedItem.GetCopy() }
                 };
                 await Shell.Current.GoToAsync(nameof(QuotasEditorPage), param);
-                //SyncShoppingListWithQuotas();
             }
             else
             {

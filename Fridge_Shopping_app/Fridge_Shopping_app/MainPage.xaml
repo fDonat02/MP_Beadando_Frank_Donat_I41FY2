@@ -7,26 +7,37 @@
              Loaded="ContentPage_Loaded">
 
     <ContentPage.Resources>
-        <!-- Sablonokat definiálhatunk erőforrásként, így mindkét listánál használhatjuk. -->
-        <!-- Egyszer kell megírni, mindkét lista elemei ugyanúgy fognak kinézni. -->
-        <DataTemplate x:Key="fridgeCollectionItem" x:DataType="loc:FridgeItem">
-            <Border Stroke="LightGray" StrokeThickness="1">
-                <Grid ColumnDefinitions="*, Auto, *" Padding="4">
-                    <Label Text="{Binding Name}" Grid.Column="0" HorizontalOptions="Start"/>
-                    <Label Text="{Binding Quantity}" Grid.Column="1" HorizontalOptions="Center"/>
-                    <Label Text="{Binding Exp_date, StringFormat='{}{0:MMM dd, yyyy}'}" Grid.Column="2" HorizontalOptions="End"/>
+        <DataTemplate x:Key="fridgeCollectionItem"
+			  x:DataType="loc:FridgeItem">
+
+            <Border 
+                Stroke="Black"
+			    StrokeThickness="1"
+                >
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8"/>
+                </Border.StrokeShape>
+                
+                <!-- Format borders of soon to expire items -->
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border"
+						 Binding="{Binding IsNearExpiration}"
+						 Value="True">
+                        <Setter Property="Stroke" Value="Red" />
+                        <Setter Property="StrokeThickness" Value="3" />
+                    </DataTrigger>
+                </Border.Triggers>
+
+                <Grid ColumnDefinitions="*, Auto, *, Auto" Padding="4">
+                    <Label Text="{Binding Name}" Grid.Column="0" Padding="10" />
+                    <Label Text="{Binding Quantity}" Grid.Column="1" Padding="10" />
+                    <Label Text="{Binding Exp_date, StringFormat='{}{0:MMM dd, yyyy}'}"
+				   Grid.Column="3" Padding="10" />
                 </Grid>
             </Border>
         </DataTemplate>
 
-        <!-- Stílusokat is definiálhatunk erőforrásként. -->
-        <!-- Ha nem adunk meg kulcsot (x:Key), akkor az összes 'TargetType' típusú UI elemre vonatkozik. -->
-        <!-- Ha van kulcs, akkor csak azok a UI elemek veszik fel a stílust, melyeknél hivatkozunk rá. -->
-        <Style TargetType="Border" x:Key="collectionBorder">
-            <Setter Property="Stroke" Value="DarkSlateGray" />
-            <Setter Property="StrokeThickness" Value="3" />
-            <Setter Property="MinimumHeightRequest" Value="200" />
-        </Style>
 
     </ContentPage.Resources>
 
@@ -41,13 +52,13 @@
                 <Button Grid.Column="2" Text="Delete" Command="{Binding DeleteItemCommand}" />
             </Grid>
 
-            <Border Style="{StaticResource collectionBorder}">
-                <CollectionView
+
+            <CollectionView
                 ItemsSource="{Binding ItemsInFridge}"
                 SelectedItem="{Binding SelectedItem}"
                 SelectionMode="Single"
-                ItemTemplate="{StaticResource fridgeCollectionItem}" />
-            </Border>
+                ItemTemplate="{StaticResource fridgeCollectionItem}" 
+            />
 
         </VerticalStackLayout>
     </ScrollView>

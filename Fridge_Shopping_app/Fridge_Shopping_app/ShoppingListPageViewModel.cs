@@ -30,7 +30,7 @@ namespace Fridge_Shopping_app
                     {
                         ItemsOnShoppingList.Remove(SelectedItem);
                     }
-                    
+
                     ItemsOnShoppingList.Add(value);
                 }
             }
@@ -45,6 +45,8 @@ namespace Fridge_Shopping_app
             ItemsOnShoppingList = service1.ItemsOnList;
         }
 
+
+        // Loading from json file
         public async Task InitCollectionsAsync()
         {
             if (File.Exists(filePath) && ItemsOnShoppingList.Count() == 0)
@@ -61,6 +63,7 @@ namespace Fridge_Shopping_app
             }
         }
 
+        // Saving to json file
         public async Task SaveCollectionsAsync()
         {
             try
@@ -130,5 +133,38 @@ namespace Fridge_Shopping_app
                 WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to add to fridge!"));
             }
         }
+
+
+        // Sharing the shopping list
+        [RelayCommand]
+        async Task ShareShoppingListAsync()
+        {
+            // Checking for network connectivity
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                WeakReferenceMessenger.Default.Send(
+                    new AlertMessage("No internet connection. Cannot share shopping list.")
+                );
+                return;
+            }
+            // Only sharing the file if there is network connectivity
+            else
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine("Shopping List:");
+
+                foreach (var item in ItemsOnShoppingList)
+                {
+                    sb.AppendLine($"• {item.Name} — {item.Quantity}");
+                }
+
+                await Share.Default.RequestAsync(new ShareTextRequest
+                {
+                    Text = sb.ToString(),
+                    Title = "Shopping List"
+                });
+            }
+        }
+
     }
 }

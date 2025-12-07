@@ -18,6 +18,8 @@ namespace Fridge_Shopping_app
         [ObservableProperty]
         DateTime exp_date = DateTime.Today;
 
+        public bool IsNearExpiration => Exp_date.Date <= DateTime.Today.AddDays(3);
+
         public FridgeItem GetCopy()
         {
             return (FridgeItem)this.MemberwiseClone();
