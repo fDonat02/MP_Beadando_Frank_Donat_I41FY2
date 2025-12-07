@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Collections.Specialized;
 
 namespace Fridge_Shopping_app
 {
@@ -32,6 +33,7 @@ namespace Fridge_Shopping_app
                     }
 
                     ItemsOnQuota.Add(value);
+                    SyncShoppingListWithQuotas();
                 }
             }
         }
@@ -46,6 +48,38 @@ namespace Fridge_Shopping_app
             shoppingListService = service1;
             ItemsOnQuota = new ObservableCollection<FridgeItem>();
         }
+
+
+        public void SyncShoppingListWithQuotas()
+        {
+            var toAdd = new List<FridgeItem>();
+
+            foreach (var quota in ItemsOnQuota)
+            {
+                float inFridge = fridgeService.ItemsInFridge
+                    .Where(i => i.Name == quota.Name)
+                    .Sum(i => i.Quantity);
+
+                float onList = shoppingListService.ItemsOnList
+                    .Where(i => i.Name == quota.Name)
+                    .Sum(i => i.Quantity);
+
+                float needed = quota.Quantity - (inFridge + onList);
+
+                if (needed > 0)
+                {
+                    var item = quota.GetCopy();
+                    item.Quantity = needed;
+                    toAdd.Add(item);
+                }
+            }
+
+            foreach (var item in toAdd)
+            {
+                shoppingListService.ItemsOnList.Add(item);
+            }
+        }
+
 
         public async Task InitCollectionsAsync()
         {
@@ -85,6 +119,8 @@ namespace Fridge_Shopping_app
                 {"editItem", new FridgeItem() }
             };
             await Shell.Current.GoToAsync(nameof(QuotasEditorPage), param);
+
+            
         }
 
         [RelayCommand]
@@ -97,6 +133,7 @@ namespace Fridge_Shopping_app
                     {"editItem", SelectedItem.GetCopy() }
                 };
                 await Shell.Current.GoToAsync(nameof(QuotasEditorPage), param);
+                //SyncShoppingListWithQuotas();
             }
             else
             {
@@ -117,20 +154,5 @@ namespace Fridge_Shopping_app
                 WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to delete!"));
             }
         }
-
-        /*[RelayCommand]
-        async Task AddItemToFridgeAsync()
-        {
-            if (SelectedItem != null)
-            {
-                fridgeService.ItemsInFridge.Add(SelectedItem);
-                await Task.Run(() => ItemsOnShoppingList.Remove(SelectedItem));
-                SelectedItem = null;
-            }
-            else
-            {
-                WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to add to fridge!"));
-            }
-        }*/
     }
 }
