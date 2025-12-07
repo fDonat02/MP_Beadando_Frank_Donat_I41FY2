@@ -14,9 +14,9 @@ using System.Xml.Linq;
 namespace Fridge_Shopping_app
 {
     [QueryProperty(nameof(EditedItem), "savedItem")]
-    internal partial class ShoppingListPageViewModel : ObservableObject
+    internal partial class QuotasPageViewModel : ObservableObject
     {
-        public ObservableCollection<FridgeItem> ItemsOnShoppingList { get; set; }
+        public ObservableCollection<FridgeItem> ItemsOnQuota { get; set; }
         public FridgeItem? SelectedItem { get; set; }
 
 
@@ -28,26 +28,28 @@ namespace Fridge_Shopping_app
                 {
                     if (SelectedItem != null)
                     {
-                        ItemsOnShoppingList.Remove(SelectedItem);
+                        ItemsOnQuota.Remove(SelectedItem);
                     }
-                    
-                    ItemsOnShoppingList.Add(value);
+
+                    ItemsOnQuota.Add(value);
                 }
             }
         }
 
-        string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "items_on_shopping_list.json");
+        string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "items_on_quota.json");
 
         private FridgeItemsService fridgeService;
-        public ShoppingListPageViewModel(FridgeItemsService service, ShoppingListItemsService service1)
+        private ShoppingListItemsService shoppingListService;
+        public QuotasPageViewModel(FridgeItemsService service, ShoppingListItemsService service1)
         {
             fridgeService = service;
-            ItemsOnShoppingList = service1.ItemsOnList;
+            shoppingListService = service1;
+            ItemsOnQuota = new ObservableCollection<FridgeItem>();
         }
 
         public async Task InitCollectionsAsync()
         {
-            if (File.Exists(filePath) && ItemsOnShoppingList.Count() == 0)
+            if (File.Exists(filePath) && ItemsOnQuota.Count() == 0)
             {
                 string jsonString = await File.ReadAllTextAsync(filePath);
                 if (!string.IsNullOrEmpty(jsonString))
@@ -55,7 +57,7 @@ namespace Fridge_Shopping_app
                     var items = JsonSerializer.Deserialize<List<FridgeItem>>(jsonString);
                     foreach (var item in items)
                     {
-                        ItemsOnShoppingList.Add(item);
+                        ItemsOnQuota.Add(item);
                     }
                 }
             }
@@ -65,7 +67,7 @@ namespace Fridge_Shopping_app
         {
             try
             {
-                string jsonString = JsonSerializer.Serialize(ItemsOnShoppingList);
+                string jsonString = JsonSerializer.Serialize(ItemsOnQuota);
                 await File.WriteAllTextAsync(filePath, jsonString);
             }
             catch (Exception e)
@@ -82,7 +84,7 @@ namespace Fridge_Shopping_app
             {
                 {"editItem", new FridgeItem() }
             };
-            await Shell.Current.GoToAsync(nameof(ShoppingListEditorPage), param);
+            await Shell.Current.GoToAsync(nameof(QuotasEditorPage), param);
         }
 
         [RelayCommand]
@@ -94,7 +96,7 @@ namespace Fridge_Shopping_app
                 {
                     {"editItem", SelectedItem.GetCopy() }
                 };
-                await Shell.Current.GoToAsync(nameof(ShoppingListEditorPage), param);
+                await Shell.Current.GoToAsync(nameof(QuotasEditorPage), param);
             }
             else
             {
@@ -107,7 +109,7 @@ namespace Fridge_Shopping_app
         {
             if (SelectedItem != null)
             {
-                await Task.Run(() => ItemsOnShoppingList.Remove(SelectedItem));
+                await Task.Run(() => ItemsOnQuota.Remove(SelectedItem));
                 SelectedItem = null;
             }
             else
@@ -116,7 +118,7 @@ namespace Fridge_Shopping_app
             }
         }
 
-        [RelayCommand]
+        /*[RelayCommand]
         async Task AddItemToFridgeAsync()
         {
             if (SelectedItem != null)
@@ -129,6 +131,6 @@ namespace Fridge_Shopping_app
             {
                 WeakReferenceMessenger.Default.Send(new AlertMessage("Select an item to add to fridge!"));
             }
-        }
+        }*/
     }
 }

@@ -4,22 +4,10 @@ namespace Fridge_Shopping_app
 {
     public partial class ShoppingListPage : ContentPage
     {
-        public ShoppingListPage(FridgeItemsService service)
+        public ShoppingListPage(FridgeItemsService service, ShoppingListItemsService service1)
         {
-
-            BindingContext = new ShoppingListPageViewModel(service);
+            BindingContext = new ShoppingListPageViewModel(service, service1);
             InitializeComponent();
-            /*
-            // Register recipient to alert messages
-            WeakReferenceMessenger.Default.Register<ShoppingListPage, AlertMessage>
-                (
-                this, (r, msg) =>
-                {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        DisplayAlert("Notice", msg.Value, "OK");
-                    });
-                });*/
         }
 
         private async void ContentPage_Loaded(object sender, EventArgs e)
