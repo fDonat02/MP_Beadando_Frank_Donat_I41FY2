@@ -7,6 +7,7 @@
             InitializeComponent();
             Routing.RegisterRoute(nameof(FridgeEditorPage), typeof(FridgeEditorPage));
             Routing.RegisterRoute(nameof(ShoppingListEditorPage), typeof(ShoppingListEditorPage));
+            Routing.RegisterRoute(nameof(QuotasEditorPage), typeof(QuotasEditorPage));
         }
     }
 }

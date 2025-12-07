@@ -16,6 +16,7 @@ namespace Fridge_Shopping_app
                 });
 
             builder.Services.AddSingleton<FridgeItemsService>();
+            builder.Services.AddSingleton<ShoppingListItemsService>();
 
 #if DEBUG
             builder.Logging.AddDebug();

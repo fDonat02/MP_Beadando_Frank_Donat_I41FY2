@@ -12,19 +12,19 @@
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
     </FlyoutItem>
-    <!--
-    <FlyoutItem Title="Quotas">
-        <ShellContent
-        Title="Fridge"
-        ContentTemplate="{DataTemplate local:QuotasPage}"
-        Route="QuotasPage" />
-    </FlyoutItem>
-    -->
+
     <FlyoutItem Title="Shopping List">
         <ShellContent
         Title="Shopping List"
         ContentTemplate="{DataTemplate local:ShoppingListPage}"
         Route="ShoppingListPage" />
     </FlyoutItem>
-    
+
+    <FlyoutItem Title="Quotas">
+        <ShellContent
+    Title="Quotas"
+    ContentTemplate="{DataTemplate local:QuotasPage}"
+    Route="QuotasPage" />
+    </FlyoutItem>
+
 </Shell>
