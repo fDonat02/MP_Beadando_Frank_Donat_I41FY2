@@ -16,7 +16,7 @@ namespace Fridge_Shopping_app
     [QueryProperty(nameof(EditedItem), "savedItem")]
     internal partial class MainPageViewModel : ObservableObject
     {
-        public ObservableCollection<FridgeItem> ItemsInFridge { get; set; }
+        public ObservableCollection<FridgeItem> ItemsInFridge { get; }
         public FridgeItem? SelectedItem { get; set; }
 
         public FridgeItem EditedItem
@@ -36,9 +36,9 @@ namespace Fridge_Shopping_app
 
         string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "items_in_fridge.json");
 
-        public MainPageViewModel()
+        public MainPageViewModel(FridgeItemsService service)
         {
-            ItemsInFridge = new ObservableCollection<FridgeItem>();
+            ItemsInFridge = service.ItemsInFridge;
         }
 
         public async Task InitCollectionsAsync()

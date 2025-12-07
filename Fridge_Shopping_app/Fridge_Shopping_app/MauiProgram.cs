@@ -15,8 +15,11 @@ namespace Fridge_Shopping_app
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<FridgeItemsService>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
+
 #endif
 
             return builder.Build();

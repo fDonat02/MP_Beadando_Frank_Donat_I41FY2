@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Fridge_Shopping_app
@@ -19,9 +20,9 @@ namespace Fridge_Shopping_app
         {
             var param = new ShellNavigationQueryParameters()
             {
-                {"savedItem", Item}
+            {"savedItem", Item}
             };
-            await Shell.Current.GoToAsync("///MainPage", param);
+            await Shell.Current.GoToAsync("..", param);
         }
     }
 }

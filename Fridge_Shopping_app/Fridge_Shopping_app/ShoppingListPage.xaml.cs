@@ -4,8 +4,10 @@ namespace Fridge_Shopping_app
 {
     public partial class ShoppingListPage : ContentPage
     {
-        public ShoppingListPage()
+        public ShoppingListPage(FridgeItemsService service)
         {
+
+            BindingContext = new ShoppingListPageViewModel(service);
             InitializeComponent();
             /*
             // Register recipient to alert messages

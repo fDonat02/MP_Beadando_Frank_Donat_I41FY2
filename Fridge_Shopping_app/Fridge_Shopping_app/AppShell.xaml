@@ -24,7 +24,7 @@
         <ShellContent
         Title="Shopping List"
         ContentTemplate="{DataTemplate local:ShoppingListPage}"
-        Route="ShoppingList" />
+        Route="ShoppingListPage" />
     </FlyoutItem>
     
 </Shell>

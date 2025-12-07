@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fridge_Shopping_app
 {
-    internal partial class FridgeItem : ObservableObject
+    public partial class FridgeItem : ObservableObject
     {
         [ObservableProperty]
         string name;

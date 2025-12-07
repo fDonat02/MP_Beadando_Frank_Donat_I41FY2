@@ -4,8 +4,9 @@ namespace Fridge_Shopping_app
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        public MainPage(FridgeItemsService service)
         {
+            BindingContext = new MainPageViewModel(service);
             InitializeComponent();
 
             // Register recipient to alert messages
@@ -36,6 +37,17 @@ namespace Fridge_Shopping_app
                 vm.SaveCollectionsAsync();
             }
         }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (this.BindingContext is MainPageViewModel vm)
+            {
+                await vm.InitCollectionsAsync();
+            }
+        }
+
     }
 
 }

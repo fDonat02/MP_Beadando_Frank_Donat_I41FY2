@@ -6,12 +6,6 @@
              x:DataType="loc:MainPageViewModel"
              Loaded="ContentPage_Loaded">
 
-    <!-- BindingContext beállítása XAML-ből. Az osztályokra mindig névtér alias-szal kell hivatkozni. -->
-    <!-- A névtereket legtöbb esetben importálni kell a CotentPage attribútumai között 'xmlns:alias' formában. -->
-    <ContentPage.BindingContext>
-        <loc:MainPageViewModel />
-    </ContentPage.BindingContext>
-
     <ContentPage.Resources>
         <!-- Sablonokat definiálhatunk erőforrásként, így mindkét listánál használhatjuk. -->
         <!-- Egyszer kell megírni, mindkét lista elemei ugyanúgy fognak kinézni. -->

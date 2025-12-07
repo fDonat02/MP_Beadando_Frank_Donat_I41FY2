@@ -19,6 +19,7 @@ namespace Fridge_Shopping_app
         public ObservableCollection<FridgeItem> ItemsOnShoppingList { get; set; }
         public FridgeItem? SelectedItem { get; set; }
 
+
         public FridgeItem EditedItem
         {
             set
@@ -29,6 +30,7 @@ namespace Fridge_Shopping_app
                     {
                         ItemsOnShoppingList.Remove(SelectedItem);
                     }
+                    
                     ItemsOnShoppingList.Add(value);
                 }
             }
@@ -36,9 +38,11 @@ namespace Fridge_Shopping_app
 
         string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "items_on_shopping_list.json");
 
-        public ShoppingListPageViewModel()
+        private FridgeItemsService fridgeService;
+        public ShoppingListPageViewModel(FridgeItemsService service)
         {
             ItemsOnShoppingList = new ObservableCollection<FridgeItem>();
+            fridgeService = service;
         }
 
         public async Task InitCollectionsAsync()
@@ -117,11 +121,9 @@ namespace Fridge_Shopping_app
         {
             if (SelectedItem != null)
             {
-                var param = new ShellNavigationQueryParameters()
-            {
-                {"editItem", SelectedItem.GetCopy() }
-            };
-                await Shell.Current.GoToAsync(nameof(FridgeEditorPage), param);
+                fridgeService.ItemsInFridge.Add(SelectedItem);
+                await Task.Run(() => ItemsOnShoppingList.Remove(SelectedItem));
+                SelectedItem = null;
             }
             else
             {
